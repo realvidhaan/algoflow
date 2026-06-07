@@ -1,0 +1,91 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background-color: #0a0a0b;
+  color: #e5e7eb;
+  font-family: "Inter", ui-sans-serif, system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Thin, dark scrollbars to match the theme */
+*::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+*::-webkit-scrollbar-thumb {
+  background: #2a2a30;
+  border-radius: 6px;
+  border: 2px solid #0a0a0b;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: #3a3a42;
+}
+
+/* Range input (speed slider / scrubber) styling */
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 999px;
+  background: #26262b;
+  outline: none;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  cursor: pointer;
+  border: 2px solid #0a0a0b;
+  box-shadow: 0 0 0 1px #3a3a42;
+  transition: transform 0.1s ease;
+}
+input[type="range"]::-webkit-slider-thumb:hover {
+  transform: scale(1.15);
+}
+input[type="range"]::-moz-range-thumb {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #e5e7eb;
+  cursor: pointer;
+  border: 2px solid #0a0a0b;
+}
+
+.mono {
+  font-family: "JetBrains Mono", ui-monospace, monospace;
+}
+
+/* Monaco: keep the current-line highlight subtle but visible */
+.algoflow-active-line {
+  background: rgba(245, 158, 11, 0.14);
+}
+.algoflow-active-glyph {
+  background: #f59e0b;
+  width: 3px !important;
+  margin-left: 2px;
+}
+
+/* Selection */
+::selection {
+  background: rgba(139, 92, 246, 0.35);
+}
