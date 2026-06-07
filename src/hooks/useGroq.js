@@ -124,14 +124,20 @@ export function useGroq() {
         return;
       }
 
-      const hydrated = hydrateArraySteps(validation.steps, sample);
+      // Steps now come from REAL server-side execution of the generated code,
+      // so each already carries its own `array`/`sorted` snapshot. Only fall
+      // back to replay-hydration if a snapshot is somehow missing.
+      const needsHydration = validation.steps.some((s) => !Array.isArray(s.array));
+      const finalSteps = needsHydration
+        ? hydrateArraySteps(validation.steps, sample)
+        : validation.steps;
       const code = stripFences(payload.code || "// (no code returned)");
       const name = (payload.name && String(payload.name)) || "Custom Algorithm";
 
       loadAiResult({
         name,
         code,
-        steps: hydrated,
+        steps: finalSteps,
         raw: bodyText,
         description,
         timeComplexity: (payload.timeComplexity && String(payload.timeComplexity)) || "",

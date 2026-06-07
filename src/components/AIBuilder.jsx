@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useStore } from "../store/useStore.js";
 import { useGroq } from "../hooks/useGroq.js";
+import { prettyComplexity } from "../lib/format.js";
 
 const EXAMPLES = [
   "Cocktail shaker sort",
@@ -93,12 +94,14 @@ export default function AIBuilder() {
             <div className="flex gap-2 text-[10px] text-emerald-400/80">
               {ai.timeComplexity && (
                 <span className="rounded bg-emerald-900/40 px-1.5 py-0.5">
-                  Time: <span className="mono">{ai.timeComplexity}</span>
+                  Time:{" "}
+                  <span className="mono">{prettyComplexity(ai.timeComplexity)}</span>
                 </span>
               )}
               {ai.spaceComplexity && (
                 <span className="rounded bg-emerald-900/40 px-1.5 py-0.5">
-                  Space: <span className="mono">{ai.spaceComplexity}</span>
+                  Space:{" "}
+                  <span className="mono">{prettyComplexity(ai.spaceComplexity)}</span>
                 </span>
               )}
             </div>
@@ -107,9 +110,9 @@ export default function AIBuilder() {
       )}
       {ai.status === "idle" && (
         <div className="rounded-md border border-border bg-panel-2/50 px-2.5 py-2 text-[11px] leading-relaxed text-slate-400">
-          Describe any array algorithm and the model will trace it step-by-step
-          on the first 6 values of the sample array, then play it back in the
-          visualizer using the same engine as the built-ins.
+          Describe any array algorithm. The model writes real code, which is then
+          executed on the first 6 values of your sample array so the animation
+          always matches the true result, the same engine as the built-ins.
         </div>
       )}
     </div>

@@ -1,6 +1,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useStore } from "../store/useStore.js";
+import { prettyComplexity } from "../lib/format.js";
 
 const COUNTER_LABELS = {
   comparisons: "Comparisons",
@@ -44,8 +45,12 @@ export default function StatsOverlay() {
     .slice(0, 5);
 
   const title = mode === "ai" ? ai.name || "Custom Algorithm" : algo?.name;
-  const time = mode === "ai" ? (ai.timeComplexity || "varies") : algo?.timeComplexity;
-  const space = mode === "ai" ? (ai.spaceComplexity || "varies") : algo?.spaceComplexity;
+  const time = prettyComplexity(
+    mode === "ai" ? ai.timeComplexity || "varies" : algo?.timeComplexity
+  );
+  const space = prettyComplexity(
+    mode === "ai" ? ai.spaceComplexity || "varies" : algo?.spaceComplexity
+  );
 
   return (
     <div className="flex flex-col gap-2 border-b border-border bg-panel/40 px-4 py-2.5">
