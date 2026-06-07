@@ -134,6 +134,8 @@ export function useGroq() {
         steps: hydrated,
         raw: bodyText,
         description,
+        timeComplexity: (payload.timeComplexity && String(payload.timeComplexity)) || "",
+        spaceComplexity: (payload.spaceComplexity && String(payload.spaceComplexity)) || "",
       });
       setPending(false);
     },

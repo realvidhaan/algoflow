@@ -78,6 +78,8 @@ export const useStore = create((set, get) => ({
     error: "",
     raw: "",
     description: "",
+    timeComplexity: "",
+    spaceComplexity: "",
   },
 
   // ----------------------------------------------------------------------
@@ -382,9 +384,19 @@ export const useStore = create((set, get) => ({
   setAi(partial) {
     set((s) => ({ ai: { ...s.ai, ...partial } }));
   },
-  loadAiResult({ name, code, steps, raw, description }) {
+  loadAiResult({ name, code, steps, raw, description, timeComplexity, spaceComplexity }) {
     set({
-      ai: { status: "success", name, code, steps, error: "", raw: raw || "", description: description || "" },
+      ai: {
+        status: "success",
+        name,
+        code,
+        steps,
+        error: "",
+        raw: raw || "",
+        description: description || "",
+        timeComplexity: timeComplexity || "",
+        spaceComplexity: spaceComplexity || "",
+      },
       mode: "ai",
       currentStep: 0,
       isPlaying: false,

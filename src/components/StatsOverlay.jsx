@@ -36,16 +36,16 @@ export default function StatsOverlay() {
   const mode = useStore((s) => s.mode);
   const step = useStore((s) => s.currentStepObj());
   const algo = useStore((s) => s.activeAlgo());
-  const aiName = useStore((s) => s.ai.name);
+  const ai = useStore((s) => s.ai);
 
   const counters = (step && step.counters) || {};
   const chips = Object.entries(counters)
     .filter(([, v]) => typeof v === "number")
     .slice(0, 5);
 
-  const title = mode === "ai" ? aiName || "Custom Algorithm" : algo?.name;
-  const time = mode === "ai" ? "AI-generated" : algo?.timeComplexity;
-  const space = mode === "ai" ? "—" : algo?.spaceComplexity;
+  const title = mode === "ai" ? ai.name || "Custom Algorithm" : algo?.name;
+  const time = mode === "ai" ? (ai.timeComplexity || "varies") : algo?.timeComplexity;
+  const space = mode === "ai" ? (ai.spaceComplexity || "varies") : algo?.spaceComplexity;
 
   return (
     <div className="flex flex-col gap-2 border-b border-border bg-panel/40 px-4 py-2.5">
