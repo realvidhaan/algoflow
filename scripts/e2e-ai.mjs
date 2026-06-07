@@ -35,6 +35,7 @@ const cases = [
   "Cocktail Shaker Sort",
   "Gnome sort",
   "Selection sort",
+  "Find the maximum value",
 ];
 
 let fail = 0;
@@ -55,12 +56,27 @@ for (const desc of cases) {
   }
   const { name, steps, timeComplexity, spaceComplexity } = res.body;
   const finalArr = steps[steps.length - 1].array;
+  const finalStep = steps[steps.length - 1];
   const sorted = isSorted(finalArr);
+  const isSort = /sort|order|arrange/i.test(desc);
+  const isFind = /find|maximum|minimum|max|min/i.test(desc);
+
   console.log(`  name: ${name}  |  ${steps.length} steps  |  T:${timeComplexity} S:${spaceComplexity}`);
   console.log(`  final frame: ${JSON.stringify(finalArr)}`);
-  if (sorted) console.log("  ✓ final array is genuinely sorted");
-  else { console.log("  ✗ FINAL ARRAY NOT SORTED"); fail++; }
-  if (steps[steps.length - 1].description === "") console.log("  ✓ final step has no clutter description");
+
+  if (isSort) {
+    if (sorted) console.log("  ✓ final array is genuinely sorted");
+    else { console.log("  ✗ FINAL ARRAY NOT SORTED"); fail++; }
+  } else if (isFind) {
+    // For find operations, check that the final step has "found" type
+    if (finalStep.type === "found" && finalStep.indices.length > 0) {
+      console.log(`  ✓ found operation marked index ${finalStep.indices[0]} as found`);
+    } else {
+      console.log(`  ✗ FIND operation didn't mark a found index (type: ${finalStep.type})`);
+      fail++;
+    }
+  }
+  if (finalStep.description === "") console.log("  ✓ final step has no clutter description");
 }
 
 console.log(`\n${fail === 0 ? "E2E PASSED ✓" : `E2E FAILED (${fail}) ✗`}`);

@@ -188,6 +188,6 @@ export const STATE_COLORS = {
   sorted: "#10b981",
   pivot: "#8b5cf6",
   pointer: "#0ea5e9",
-  found: "#10b981",
+  found: "#facc15", // bright yellow — found max/min/value
   notfound: "#ef4444",
 };

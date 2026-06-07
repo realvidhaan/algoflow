@@ -24,8 +24,8 @@ loop conditions before you answer.
 
 Respond with ONLY a single JSON object (no markdown, no prose):
 {
-  "name": string,            // short human name, e.g. "Cocktail Shaker Sort"
-  "timeComplexity": string,  // worst-case time, e.g. "O(n^2)"
+  "name": string,            // short human name, e.g. "Cocktail Shaker Sort" or "Find Maximum"
+  "timeComplexity": string,  // worst-case time, e.g. "O(n^2)" or "O(n)"
   "spaceComplexity": string, // auxiliary space, e.g. "O(1)"
   "code": string             // a JavaScript function named "sort" (use \\n for newlines)
 }
@@ -44,8 +44,8 @@ visualizer can animate every operation:
   - arr.get(i)              -> reads the value at index i
   - arr.set(i, value)       -> writes value at index i (records a write)
   - arr.markSorted(i)       -> marks index i as locked in its final position
-  - arr.found(i)            -> (search algorithms) marks index i as the found target
-  - arr.notFound()          -> (search algorithms) signals the target was not found
+  - arr.found(i)            -> marks index i as FOUND (use this for max/min/search results!)
+  - arr.notFound()          -> signals the target was not found
 
 Hard rules:
   - Define exactly one function named "sort" that takes "arr" and returns it.
@@ -56,10 +56,12 @@ Hard rules:
   - To move/exchange elements use arr.swap(i, j) (for exchanges) or arr.set(i, v)
     (for overwrites). Never reorder by reassigning plain variables only.
   - For sorting, the array MUST end fully sorted in ascending order.
+  - For finding maximum/minimum/value: call arr.found(i) on the final index to highlight it.
   - Keep it to a single self-contained function. No comments referencing line numbers.
 
-Worked example — Bubble Sort using the contract:
+Worked examples:
 
+(1) Bubble Sort:
 function sort(arr) {
   const n = arr.length;
   for (let i = 0; i < n - 1; i++) {
@@ -71,6 +73,18 @@ function sort(arr) {
     arr.markSorted(n - 1 - i);
   }
   arr.markSorted(0);
+  return arr;
+}
+
+(2) Find Maximum Value:
+function sort(arr) {
+  let maxIdx = 0;
+  for (let i = 1; i < arr.length; i++) {
+    if (arr.compare(i, maxIdx) > 0) {
+      maxIdx = i;
+    }
+  }
+  arr.found(maxIdx);
   return arr;
 }
 

@@ -10,7 +10,7 @@ const COLORS = {
   sorted: "#10b981", // emerald
   pivot: "#8b5cf6", // violet
   pointer: "#0ea5e9", // sky
-  found: "#10b981",
+  found: "#facc15", // bright yellow — found max/min/value
   notfound: "#ef4444",
 };
 

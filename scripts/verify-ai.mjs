@@ -116,7 +116,30 @@ const idiomaticInsertion = `function sort(arr) {
   );
 }
 
-// ---- 5. Infinite loop is contained ---------------------------------------- //
+// ---- 5. Find maximum marks the index as found ----------------------------- //
+const findMax = `function sort(arr) {
+  let maxIdx = 0;
+  for (let i = 1; i < arr.length; i++) {
+    if (arr.compare(i, maxIdx) > 0) {
+      maxIdx = i;
+    }
+  }
+  arr.found(maxIdx);
+  return arr;
+}`;
+{
+  const { steps } = runInstrumented(findMax, SAMPLE);
+  const foundSteps = steps.filter((s) => s.type === "found");
+  ok(foundSteps.length > 0, "find maximum has at least one 'found' step");
+  if (foundSteps.length > 0) {
+    const foundIdx = foundSteps[0].indices[0];
+    const maxVal = Math.max(...SAMPLE);
+    const actualMax = SAMPLE[foundIdx];
+    ok(actualMax === maxVal, `found index ${foundIdx} is the actual maximum (${maxVal})`);
+  }
+}
+
+// ---- 6. Infinite loop is contained ---------------------------------------- //
 const infinite = `function sort(arr) { while (true) { arr.compare(0, 1); } return arr; }`;
 {
   let threw = false;
@@ -128,5 +151,5 @@ const infinite = `function sort(arr) { while (true) { arr.compare(0, 1); } retur
   ok(threw, "infinite loop hits the operation-limit backstop");
 }
 
-console.log(`\n${fail === 0 ? "ALL AI-ENGINE CHECKS PASSED ✓" : "SOME CHECKS FAILED ✗"}  (${pass} passed, ${fail} failed)`);
+console.log(`\n${fail === 0 ? "ALL AI-ENGINE CHECKS PASSED ✓" : "SOME CHECKS FAILED ✗"}  (${pass} passed, ${fail} failed, total checks: ${pass + fail})`);
 process.exit(fail === 0 ? 0 : 1);
